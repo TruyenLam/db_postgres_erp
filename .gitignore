@@ -1,0 +1,43 @@
+# ================================================
+# ERP TN Group - Git Ignore
+# Bảo vệ thông tin nhạy cảm
+# ================================================
+
+# Environment files chứa passwords
+.env
+.env.local
+.env.production
+.env.staging
+
+# Secrets directory
+secrets/
+ssl/
+
+# Backup files (có thể chứa data nhạy cảm)
+volumes/backups/
+volumes/data/
+
+# Log files
+*.log
+logs/
+
+# Docker override files
+docker-compose.override.yml
+
+# Temporary files
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+
+# pgAdmin config
+volumes/pgadmin/
+
+# Redis data
+volumes/redis/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo

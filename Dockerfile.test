@@ -1,0 +1,55 @@
+# ================================================
+# ERP TN Group - Secure PostgreSQL với Auto Backup (Test Version)
+# Enhanced security và backup capabilities
+# ================================================
+
+FROM postgres:15-alpine
+
+# Install essential tools
+RUN apk update && apk add --no-cache \
+    dcron \
+    gzip \
+    gnupg \
+    curl \
+    bash \
+    tzdata && \
+    rm -rf /var/cache/apk/*
+
+# Security: Create non-root user for backup processes
+RUN addgroup -g 2000 backup && \
+    adduser -D -u 2000 -G backup backup
+
+# Create backup and log directories
+RUN mkdir -p /backup /var/log/postgresql && \
+    chown backup:backup /backup
+
+# Copy backup scripts
+COPY volumes/init/backup_script.sh /usr/local/bin/ 2>/dev/null || echo "#!/bin/bash\necho 'Backup script placeholder'" > /usr/local/bin/backup_script.sh
+COPY volumes/init/setup_backup.sh /usr/local/bin/ 2>/dev/null || echo "#!/bin/bash\necho 'Setup backup script placeholder'" > /usr/local/bin/setup_backup.sh
+
+# Set permissions với security
+RUN chmod +x /usr/local/bin/backup_script.sh \
+    && chmod +x /usr/local/bin/setup_backup.sh \
+    && chown backup:backup /usr/local/bin/backup_script.sh
+
+# Tạo secure cron job cho backup hàng ngày
+RUN echo "0 2 * * * backup /usr/local/bin/backup_script.sh >/dev/null 2>&1" > /etc/crontab \
+    && chmod 644 /etc/crontab
+
+# Copy custom entrypoint với security enhancements
+COPY docker-entrypoint-custom.sh /usr/local/bin/ 2>/dev/null || echo "#!/bin/bash\nexec docker-entrypoint.sh \"\$@\"" > /usr/local/bin/docker-entrypoint-custom.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint-custom.sh
+
+# Security: Set timezone
+ENV TZ=Asia/Ho_Chi_Minh
+
+# Security: Disable unnecessary services
+RUN rm -rf /tmp/* /var/tmp/* \
+    && find /var/log -type f -exec truncate -s 0 {} \; 2>/dev/null || true
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-postgres}
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint-custom.sh"]
+CMD ["postgres"]

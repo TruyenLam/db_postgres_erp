@@ -1,0 +1,158 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database với bảo mật cao
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: postgres_secure
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+      TZ: Asia/Ho_Chi_Minh
+      # Security settings
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
+    # CHỈ expose port nội bộ - KHÔNG public
+    expose:
+      - "5432"
+    volumes:
+      # Data persistence với restricted permissions
+      - ./volumes/data:/var/lib/postgresql/data:Z
+      # Backup folder với encryption
+      - ./volumes/backups:/backups:Z
+      # Init scripts
+      - ./volumes/init:/docker-entrypoint-initdb.d:ro
+      # SSL certificates
+      - ./ssl:/ssl:ro
+    networks:
+      - erpnet_secure
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    # Security: Run as non-root user
+    user: postgres
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+
+  # Nginx Reverse Proxy với SSL
+  nginx_proxy:
+    image: nginx:alpine
+    container_name: nginx_secure_proxy
+    restart: always
+    # CHỈ expose HTTPS port
+    ports:
+      - "443:443"
+      - "80:80"  # Redirect to HTTPS
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/ssl:ro
+      - ./nginx/logs:/var/log/nginx
+    networks:
+      - erpnet_secure
+    depends_on:
+      - postgres
+      - pgadmin
+    # Security headers
+    environment:
+      - NGINX_DISABLE_SYMLINKS=off
+
+  # pgAdmin 4 - Database Management (Internal only)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_secure
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: 'True'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'True'
+      # Security settings
+      PGADMIN_CONFIG_LOGIN_BANNER: "🔒 ERP TN Group - Authorized Personnel Only"
+      PGADMIN_CONFIG_CONSOLE_LOG_LEVEL: 20
+    # CHỈ expose port nội bộ
+    expose:
+      - "80"
+    volumes:
+      # pgAdmin data persistence với restricted access
+      - ./volumes/pgadmin:/var/lib/pgadmin:Z
+      - ./ssl:/ssl:ro
+    networks:
+      - erpnet_secure
+    depends_on:
+      - postgres
+    # Security: Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+
+  # Redis (Internal cache only)
+  redis:
+    image: redis:7-alpine
+    container_name: redis_secure
+    restart: always
+    # CHỈ expose port nội bộ
+    expose:
+      - "6379"
+    volumes:
+      - ./volumes/redis:/data:Z
+    networks:
+      - erpnet_secure
+    # Redis security
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass ${REDIS_PASSWORD:-TnGroup_Redis@2024}
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+    # Security: Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.3'
+
+networks:
+  erpnet_secure:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+    # Network security
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "true"
+      com.docker.network.bridge.enable_ip_masquerade: "true"
+      com.docker.network.driver.mtu: "1500"
+
+# Volumes với security labels
+volumes:
+  postgres_data_secure:
+    name: erp_postgres_data_secure
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/data
+  
+  pgadmin_data_secure:
+    name: erp_pgadmin_data_secure
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/pgadmin

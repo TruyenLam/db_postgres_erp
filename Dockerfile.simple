@@ -1,0 +1,27 @@
+# ================================================
+# ERP TN Group - PostgreSQL Test Version
+# Basic PostgreSQL for testing
+# ================================================
+
+FROM postgres:15-alpine
+
+# Install essential tools
+RUN apk update && apk add --no-cache \
+    dcron \
+    gzip \
+    curl \
+    bash \
+    tzdata && \
+    rm -rf /var/cache/apk/*
+
+# Create backup directory
+RUN mkdir -p /backup
+
+# Security: Set timezone
+ENV TZ=Asia/Ho_Chi_Minh
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-postgres}
+
+CMD ["postgres"]
