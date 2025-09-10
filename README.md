@@ -1,130 +1,87 @@
-# 🚀 ERP TN Group - Complete PostgreSQL ERP System
+# 🗄️ PostgreSQL Database Platform for ERP Applications
 
-Hệ thống PostgreSQL **production-ready** hoàn chỉnh cho TN Group với **bảo mật cao**, **auto backup**, **AI/ML Vector Database**, và **Web Ma## 🔐 **THÔNG TIN ĐĂNG NHẬP & TRUY CẬP**
+**Hệ thống PostgreSQL được tùy chỉnh chuyên biệt cho các ứng dụng ERP doanh nghiệp**
 
-### **Access URLs:**
-- 🌐 **pgAdmin Web Interface**: http://localhost:8080
-- 📊 **PostgreSQL Database**: localhost:5432
-- ⚡ **Redis Cache**: localhost:6379
+## 📋 **Giới thiệu**
 
-### **Thông tin đăng nhập:**
+Đây **KHÔNG PHẢI** là một ứng dụng ERP hoàn chỉnh, mà là một **nền tảng database PostgreSQL** được thiết kế và tối ưu hóa đặc biệt để phục vụ cho việc phát triển các ứng dụng ERP. 
+
+### 🎯 **Mục đích của dự án:**
+
+- 🗄️ **Database Infrastructure** - Cung cấp nền tảng database ổn định và mạnh mẽ
+- 🔧 **ERP-Ready Configuration** - Cấu hình sẵn cho các yêu cầu ERP thông thường
+- 🛡️ **Enterprise Security** - Bảo mật cấp doanh nghiệp từ ngày đầu
+- 📊 **Management Tools** - Công cụ quản lý database trực quan
+- ⚡ **Performance Optimization** - Tối ưu hiệu suất cho workload ERP
+- 🔄 **Auto Backup & Recovery** - Hệ thống sao lưu tự động an toàn
+
+### 👥 **Dành cho ai:**
+
+- **Backend Developers** - Phát triển API và business logic cho ERP
+- **Full-stack Developers** - Xây dựng ứng dụng ERP từ A-Z  
+- **DevOps Engineers** - Deploy và quản lý hạ tầng ERP
+- **Database Administrators** - Quản lý database ERP quy mô lớn
+- **System Architects** - Thiết kế kiến trúc hệ thống ERP
+
+---
+
+## 🏗️ **Kiến trúc hệ thống**
+
+### **Core Components:**
 ```
-📧 pgAdmin:
-   - Email: lamvantruyen@gmail.com
-   - Password: [Xem trong file .env]
-
-🗄️ Database Connection (từ pgAdmin):
-   - Server Name: erp_postgres (hoặc localhost)
-   - Port: 5432
-   - Database: erp_tngroup
-   - Username: erp_admin
-   - Password: [Xem trong file .env - POSTGRES_PASSWORD]
-
-⚡ Redis:
-   - Host: localhost
-   - Port: 6379
-   - Password: [Xem trong file .env - POSTGRES_PASSWORD]
-```
-
-### **Cách kết nối pgAdmin với Database:**
-1. Mở http://localhost:8080
-2. Đăng nhập với email và password từ .env
-3. Click "Add New Server"
-4. Tab "General": Đặt tên server (VD: "ERP TN Group")
-5. Tab "Connection":
-   - Host: `erp_postgres` (nếu lỗi thì dùng `localhost`)
-   - Port: `5432`
-   - Maintenance database: `erp_tngroup`
-   - Username: `erp_admin`
-   - Password: [từ file .env]
-6. Click "Save"
-
----terface**.
-
-## 📋 **Tổng quan hệ thống**
-
-Đây là một hệ thống ERP hoàn chỉnh được thiết kế để đáp ứng nhu cầu doanh nghiệp hiện đại:
-
-- 🗄️ **PostgreSQL 15** - Database engine mạnh mẽ và ổn định
-- 🌐 **pgAdmin 4** - Giao diện quản lý database trực quan
-- 🚀 **Redis 7** - Caching system để tăng hiệu suất
-- 🐳 **Docker** - Container deployment dễ dàng
-- 💾 **Auto Backup** - Sao lưu tự động hàng ngày
-- 🧠 **Vector Database** - Hỗ trợ AI/ML (optional)
-- 🛡️ **Security** - Bảo mật cao cấp cho môi trường production
-
-## 🛡️ **Security Features**
-
-- ✅ **No Public Database Exposure** - PostgreSQL chỉ accessible qua internal network
-- ✅ **SSL/TLS Encryption** - HTTPS với strong ciphers (TLSv1.2+)
-- ✅ **Encrypted Backups** - GPG AES256 encryption với checksum verification
-- ✅ **Docker Secrets** - Passwords không hardcoded trong code
-- ✅ **Reverse Proxy** - Nginx với security headers và rate limiting
-- ✅ **Network Isolation** - Custom secure bridge network
-- ✅ **Resource Limits** - Container resource constraints
-- ✅ **Access Control** - IP restrictions và authentication
-
-## 🧠 **Vector Database Features**
-
-- ✅ **pgvector Extension** - Native vector operations trong PostgreSQL
-- ✅ **Similarity Search** - Cosine similarity, Euclidean distance
-- ✅ **Document Embeddings** - Store và search document vectors (1536 dims)
-- ✅ **Product Recommendations** - AI-powered product similarity
-- ✅ **User Behavior Analytics** - Vector-based user analysis
-- ✅ **Hybrid Search** - Combine text search với vector similarity
-- ✅ **AI/ML Integration** - Ready for OpenAI, Cohere, Hugging Face
-- ✅ **Performance Optimized** - IVFFLAT indexes cho fast search
-
-## 📁 Cấu trúc thư mục
-
-```
-D:\ERP_TNGROUP\db_postgreSQL\
-├── .env.example                # 📋 Environment template
-├── .env                        # 🔐 Environment variables (KHÔNG commit)
-├── .gitignore                  # Git ignore cho security
-├── docker-compose.yml          # 🛡️  Secure Docker compose
-├── Dockerfile                  # 🔒 Hardened PostgreSQL với pgvector
-├── docker-entrypoint-custom.sh # Custom entrypoint với security
-├── setup_environment.bat       # 🚀 Auto environment setup
-├── generate_passwords.bat      # 🔐 Strong password generator
-├── vector_db_manager.bat       # 🧠 Vector database management
-├── python_vector_integration.py # 🐍 Python AI/ML integration
-├── SECURITY.md                 # 📋 Security documentation
-├── DEVELOPER.md                # 👨‍💻 Developer information
-├── generate_ssl.bat            # 🔐 SSL certificate generator
-├── security_center.bat         # 🛡️  Security management center
-├── restore_secure.bat          # 🔓 Secure restore script
-├── nginx/
-│   └── nginx.conf              # 🌐 Reverse proxy với SSL
-├── ssl/                        # 🔐 SSL certificates (tạo bằng script)
-└── volumes/
-    ├── data/                   # PostgreSQL data (secured)
-    ├── backups/                # 🔒 Encrypted backups
-    ├── init/                   # Init scripts với security
-    │   ├── backup_script.sh    # 🔐 Encrypted backup script
-    │   ├── backup_scripts.sql  # SQL init cho backup tracking
-    │   └── vector_db_init.sql  # 🧠 Vector database initialization
-    ├── pgladmin/                # pgAdmin data (secured)
-    └── redis/                  # Redis data (secured)
+┌─────────────────────────────────────────────────────────────┐
+│                PostgreSQL Database Platform                │
+├─────────────────────────────────────────────────────────────┤
+│  🗄️  PostgreSQL 15      │  📊  pgAdmin 4 Web UI            │
+│  ⚡  Redis Cache         │  🐳  Docker Orchestration        │
+│  💾  Auto Backup        │  🛡️  Enterprise Security         │
+│  🧠  Vector DB (AI/ML)   │  📈  Performance Monitoring      │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-## 🔄 Tính năng Auto Backup tích hợp
+### **✅ Tính năng chính:**
 
-### ✅ **Backup tự động trong PostgreSQL container:**
-- **Cron Job**: Chạy backup mỗi ngày lúc **2:00 AM** (giờ Việt Nam)
-- **Compression**: Tự động nén backup với gzip
-- **Cleanup**: Tự động xóa backup cũ hơn 30 ngày
-- **Logging**: Ghi log chi tiết vào `/var/log/backup.log`
-- **Format**: `backup_YYYYMMDD_HHMMSS.sql.gz`
+**🗄️ PostgreSQL Database:**
+- ✅ PostgreSQL 15 Alpine (Latest stable)
+- ✅ Optimized configuration cho ERP workloads
+- ✅ Custom schema templates cho ERP entities
+- ✅ Advanced indexing strategies
+- ✅ Connection pooling & performance tuning
 
-### 🏗️ **Architecture:**
-```
-PostgreSQL Container:
-├── PostgreSQL Database Service
-├── Cron Daemon (auto backup)
-├── Backup Script (/usr/local/bin/backup_script.sh)
-└── Log file (/var/log/backup.log)
-```
+**📊 Database Management:**
+- ✅ pgAdmin 4 web interface
+- ✅ Visual query builder
+- ✅ Database monitoring dashboard
+- ✅ User & permission management
+- ✅ Import/Export tools
+
+**⚡ Caching & Performance:**
+- ✅ Redis 7 caching layer
+- ✅ Query result caching
+- ✅ Session management
+- ✅ Real-time data synchronization
+
+**🛡️ Enterprise Security:**
+- ✅ Role-based access control (RBAC)
+- ✅ SSL/TLS encryption
+- ✅ Network isolation
+- ✅ Audit logging
+- ✅ Secure password policies
+
+**💾 Backup & Recovery:**
+- ✅ Automated daily backups
+- ✅ Point-in-time recovery
+- ✅ Encrypted backup storage
+- ✅ Backup retention policies
+- ✅ One-click restore functionality
+
+**🧠 AI/ML Ready (Optional):**
+- ✅ pgvector extension
+- ✅ Vector similarity search
+- ✅ Document embeddings storage
+- ✅ AI-powered analytics support
+
+---
 
 ## 🚀 **HƯỚNG DẪN SETUP NHANH (5 PHÚT)**
 
@@ -140,15 +97,16 @@ docker-compose --version
 
 ### **Bước 2: Clone và setup môi trường**
 ```powershell
-# 1. Di chuyển vào thư mục dự án
-cd D:\ERP_TNGROUP\db_postgreSQL
+# 1. Clone repository
+git clone https://github.com/TruyenLam/db_postgres_erp.git
+cd db_postgres_erp
 
 # 2. Copy file cấu hình mẫu
 copy .env.example .env
 
 # 3. Chỉnh sửa file .env (BẮT BUỘC)
 notepad .env
-# Thay đổi passwords và email của bạn!
+# ⚠️ Thay đổi passwords và email của bạn!
 ```
 
 ### **Bước 3: Khởi động hệ thống**
@@ -175,131 +133,181 @@ docker ps  # Xem các container đang chạy
 - 📊 **Database**: localhost:5432
 - ⚡ **Redis**: localhost:6379
 
-**🎉 HOÀN THÀNH! Hệ thống đã sẵn sàng sử dụng!**
+**🎉 HOÀN THÀNH! Database platform đã sẵn sàng cho việc phát triển ERP!**
 
 ---
 
-## 🔧 **HƯỚNG DẪN CHI TIẾT**
+## 🔐 **THÔNG TIN TRUY CẬP**
 
-### **Setup từng bước:**
-```bash
-# 1. � Auto setup environment
-.\setup_environment.bat
-
-# 2. �🔐 Generate strong passwords (optional)
-.\generate_passwords.bat
-
-# 3. �️  Build and start secure services
-docker-compose build --no-cache
-docker-compose up -d
-
-# 4. 🔍 Check security status
-.\security_center.bat
+### **Database Connection:**
+```yaml
+Host: localhost (hoặc erp_postgres từ container)
+Port: 5432
+Database: erp_tngroup
+Username: erp_admin
+Password: [Xem trong file .env]
 ```
 
-### **📝 Manual Setup:**
-```bash
-# 1. 📋 Copy environment template
-copy .env.example .env
-
-# 2. 📝 Edit .env file với passwords mạnh
-notepad .env
-
-# 3. 🔐 Generate SSL certificates
-.\generate_ssl.bat
-
-# 4. 🛡️  Build secure containers
-docker-compose build --no-cache
-
-# 5. 🚀 Start secure services
-docker-compose up -d
-
-# 6. 🔍 Check security status
-.\security_center.bat
+### **pgAdmin Web Interface:**
+```yaml
+URL: http://localhost:8080
+Email: lamvantruyen@gmail.com
+Password: [Xem trong file .env]
 ```
 
-### **⚠️ QUAN TRỌNG - Environment Configuration:**
-Trước khi chạy hệ thống, bạn **BẮT BUỘC** phải:
-1. Copy `.env.example` thành `.env`
-2. Thay đổi **TẤT CẢ** passwords trong `.env`
-3. Cập nhật email và thông tin cá nhân
-4. Tạo SSL certificates
-
-**🔐 Passwords cần thay đổi:**
-- `POSTGRES_PASSWORD` - Database password
-- `PGADMIN_DEFAULT_EMAIL` - Your email
-- `PGADMIN_DEFAULT_PASSWORD` - Admin interface password  
-- `REDIS_PASSWORD` - Redis password
-- `BACKUP_ENCRYPTION_KEY` - Backup encryption key
-
-### **2. Access URLs (HTTPS Only):**
+### **Redis Cache:**
+```yaml
+Host: localhost
+Port: 6379
+Password: [Xem trong file .env]
 ```
-🔒 pgAdmin: https://localhost/
-   Email: lamvantruyen@gmail.com
-   Password: [from .env file]
 
-🛡️  Database: Internal only
-   Host: postgres_secure (không public access)
-   Port: 5432 (internal)
-   Database: erp_tngroup
-```
+### **Cách kết nối pgAdmin với Database:**
+1. Mở http://localhost:8080
+2. Đăng nhập với email và password từ .env
+3. Click "Add New Server"
+4. Tab "General": Đặt tên server (VD: "ERP Database")
+5. Tab "Connection":
+   - Host: `erp_postgres` (nếu lỗi thì dùng `localhost`)
+   - Port: `5432`
+   - Maintenance database: `erp_tngroup`
+   - Username: `erp_admin`
+   - Password: [từ file .env]
+6. Click "Save"
+
+---
 
 ## 📚 **HƯỚNG DẪN SỬ DỤNG CHO DEVELOPER**
 
-### **Cấu trúc Database ERP:**
+### **Cấu trúc Database ERP cơ bản:**
+
 ```sql
--- Tạo schema cơ bản cho ERP
+-- Schema chính cho ERP
 CREATE SCHEMA IF NOT EXISTS erp;
 
--- Bảng users (người dùng)
+-- Bảng người dùng
 CREATE TABLE erp.users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     full_name VARCHAR(100),
     role VARCHAR(20) DEFAULT 'user',
+    department_id INTEGER,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Bảng phòng ban
+CREATE TABLE erp.departments (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    code VARCHAR(20) UNIQUE NOT NULL,
+    manager_id INTEGER REFERENCES erp.users(id),
+    parent_id INTEGER REFERENCES erp.departments(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bảng products (sản phẩm)  
+-- Bảng khách hàng
+CREATE TABLE erp.customers (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    address TEXT,
+    tax_code VARCHAR(50),
+    contact_person VARCHAR(100),
+    credit_limit DECIMAL(15,2) DEFAULT 0,
+    payment_terms INTEGER DEFAULT 30,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Bảng nhà cung cấp
+CREATE TABLE erp.suppliers (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    address TEXT,
+    tax_code VARCHAR(50),
+    contact_person VARCHAR(100),
+    payment_terms INTEGER DEFAULT 30,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Bảng sản phẩm/dịch vụ
 CREATE TABLE erp.products (
     id SERIAL PRIMARY KEY,
     code VARCHAR(50) UNIQUE NOT NULL,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(200) NOT NULL,
     description TEXT,
-    price DECIMAL(10,2) NOT NULL,
-    stock_quantity INTEGER DEFAULT 0,
+    unit VARCHAR(20) DEFAULT 'pcs',
     category_id INTEGER,
+    supplier_id INTEGER REFERENCES erp.suppliers(id),
+    cost_price DECIMAL(15,2),
+    selling_price DECIMAL(15,2),
+    stock_quantity DECIMAL(15,3) DEFAULT 0,
+    min_stock_level DECIMAL(15,3) DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bảng orders (đơn hàng)
+-- Bảng đơn hàng
 CREATE TABLE erp.orders (
     id SERIAL PRIMARY KEY,
     order_number VARCHAR(50) UNIQUE NOT NULL,
-    user_id INTEGER REFERENCES erp.users(id),
-    total_amount DECIMAL(10,2) NOT NULL,
+    customer_id INTEGER REFERENCES erp.customers(id),
+    order_date DATE DEFAULT CURRENT_DATE,
+    delivery_date DATE,
     status VARCHAR(20) DEFAULT 'pending',
-    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    subtotal DECIMAL(15,2) DEFAULT 0,
+    tax_amount DECIMAL(15,2) DEFAULT 0,
+    discount_amount DECIMAL(15,2) DEFAULT 0,
+    total_amount DECIMAL(15,2) DEFAULT 0,
+    notes TEXT,
+    created_by INTEGER REFERENCES erp.users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bảng order_items (chi tiết đơn hàng)
+-- Bảng chi tiết đơn hàng
 CREATE TABLE erp.order_items (
     id SERIAL PRIMARY KEY,
     order_id INTEGER REFERENCES erp.orders(id),
     product_id INTEGER REFERENCES erp.products(id),
-    quantity INTEGER NOT NULL,
-    unit_price DECIMAL(10,2) NOT NULL
+    quantity DECIMAL(15,3) NOT NULL,
+    unit_price DECIMAL(15,2) NOT NULL,
+    discount_percent DECIMAL(5,2) DEFAULT 0,
+    line_total DECIMAL(15,2) NOT NULL
 );
+
+-- Indexes để tối ưu performance
+CREATE INDEX idx_users_username ON erp.users(username);
+CREATE INDEX idx_users_email ON erp.users(email);
+CREATE INDEX idx_customers_code ON erp.customers(code);
+CREATE INDEX idx_products_code ON erp.products(code);
+CREATE INDEX idx_orders_customer ON erp.orders(customer_id);
+CREATE INDEX idx_orders_date ON erp.orders(order_date);
+CREATE INDEX idx_order_items_order ON erp.order_items(order_id);
 ```
 
 ### **Kết nối từ ứng dụng:**
 
-**Python (psycopg2):**
+**Python (psycopg2/asyncpg):**
 ```python
 import psycopg2
+from sqlalchemy import create_engine
 
 # Thông tin kết nối
+DATABASE_URL = "postgresql://erp_admin:YOUR_PASSWORD@localhost:5432/erp_tngroup"
+
+# SQLAlchemy connection
+engine = create_engine(DATABASE_URL)
+
+# Direct psycopg2 connection
 conn = psycopg2.connect(
     host="localhost",
     port="5432", 
@@ -307,91 +315,67 @@ conn = psycopg2.connect(
     user="erp_admin",
     password="YOUR_PASSWORD_FROM_ENV"
 )
-
-# Thực hiện query
-cursor = conn.cursor()
-cursor.execute("SELECT * FROM erp.users")
-results = cursor.fetchall()
 ```
 
-**Node.js (pg):**
+**Node.js (pg/Sequelize):**
 ```javascript
 const { Pool } = require('pg');
+const { Sequelize } = require('sequelize');
 
+// pg connection pool
 const pool = new Pool({
     host: 'localhost',
     port: 5432,
     database: 'erp_tngroup', 
     user: 'erp_admin',
-    password: 'YOUR_PASSWORD_FROM_ENV'
+    password: 'YOUR_PASSWORD_FROM_ENV',
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
 });
 
-// Query
-const result = await pool.query('SELECT * FROM erp.products');
+// Sequelize ORM
+const sequelize = new Sequelize(
+    'erp_tngroup', 'erp_admin', 'YOUR_PASSWORD', {
+        host: 'localhost',
+        dialect: 'postgres'
+    }
+);
 ```
 
-**PHP (PDO):**
+**PHP (PDO/Laravel):**
 ```php
+// PDO connection
 $pdo = new PDO(
     'pgsql:host=localhost;port=5432;dbname=erp_tngroup',
     'erp_admin', 
     'YOUR_PASSWORD_FROM_ENV'
 );
 
-$stmt = $pdo->query('SELECT * FROM erp.orders');
-$orders = $stmt->fetchAll();
+// Laravel .env configuration
+DB_CONNECTION=pgsql
+DB_HOST=localhost
+DB_PORT=5432
+DB_DATABASE=erp_tngroup
+DB_USERNAME=erp_admin
+DB_PASSWORD=YOUR_PASSWORD_FROM_ENV
 ```
 
-### **Development Workflow:**
-1. 🔄 **Phát triển local**: Sử dụng pgAdmin để thiết kế schema
-2. 📝 **Version control**: Backup schema thành SQL files
-3. 🧪 **Testing**: Sử dụng script test tự động
-4. 🚀 **Deploy**: Build và deploy với Docker
-5. 📊 **Monitor**: Theo dõi logs và performance
+**Java (JDBC/Spring Boot):**
+```java
+// JDBC URL
+String url = "jdbc:postgresql://localhost:5432/erp_tngroup";
+String username = "erp_admin";
+String password = "YOUR_PASSWORD_FROM_ENV";
+
+// Spring Boot application.properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/erp_tngroup
+spring.datasource.username=erp_admin
+spring.datasource.password=YOUR_PASSWORD_FROM_ENV
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+```
 
 ---
-```bash
-# 🧠 Vector database management
-.\vector_db_manager.bat
-
-# 🐍 Python AI/ML integration
-python python_vector_integration.py
-
-# 🔍 Test similarity search
-docker-compose exec postgres_secure psql -U erp_admin -d erp_tngroup -c "
-SELECT * FROM vector_db.search_similar_documents(
-    (SELECT ARRAY(SELECT random() FROM generate_series(1, 1536)))::vector,
-    0.8, 5
-);"
-
-# �️ Product recommendations
-docker-compose exec postgres_secure psql -U erp_admin -d erp_tngroup -c "
-SELECT * FROM vector_db.get_product_recommendations('prod_001', 5);"
-```
-
-### **4. AI/ML Integration Examples:**
-```python
-# OpenAI Integration
-import openai
-from erp_vector_db import ERPVectorDB
-
-# Get embedding từ OpenAI
-response = openai.Embedding.create(
-    input="Your text here",
-    model="text-embedding-ada-002"
-)
-embedding = response['data'][0]['embedding']
-
-# Insert vào vector database
-vector_db = ERPVectorDB()
-vector_db.connect()
-vector_db.insert_document_embedding(
-    document_id="doc_001",
-    title="AI Document",
-    content="Document content",
-    embedding=embedding
-)
-```
 
 ## 🧪 **TESTING VÀ KIỂM TRA HỆ THỐNG**
 
@@ -403,8 +387,8 @@ powershell -ExecutionPolicy Bypass -File test_system.ps1
 # Test hiệu suất nhanh
 powershell -ExecutionPolicy Bypass -File quick_test.ps1
 
-# Deploy và test hoàn chỉnh
-powershell -ExecutionPolicy Bypass -File deploy_system.ps1
+# Validate volume mapping
+powershell -ExecutionPolicy Bypass -File validate_volumes.ps1
 ```
 
 ### **Test thủ công:**
@@ -465,13 +449,16 @@ docker stats
 # Backup thủ công
 docker exec erp_postgres pg_dump -U erp_admin -d erp_tngroup > backup/manual_backup.sql
 
+# Backup với compression
+docker exec erp_postgres pg_dump -U erp_admin -d erp_tngroup | gzip > backup/compressed_backup.sql.gz
+
 # Restore từ backup
 docker exec -i erp_postgres psql -U erp_admin -d erp_tngroup < backup/backup_file.sql
 
 # Xem danh sách backup
 dir backup\
 
-# Chạy backup script
+# Chạy backup script tự động
 .\backup_manual.bat
 ```
 
@@ -489,52 +476,12 @@ docker-compose up -d
 # Rebuild khi có thay đổi
 docker-compose build --no-cache
 docker-compose up -d
+
+# Scale Redis (nếu cần)
+docker-compose up -d --scale redis=2
 ```
 
-## ⚙️ Cấu hình Backup
-
-**Thay đổi lịch backup:**
-Sửa file `volumes/init/setup_backup.sh`:
-```bash
-# Backup mỗi ngày lúc 2:00 AM
-0 2 * * * postgres /usr/local/bin/backup_script.sh
-
-# Backup mỗi 6 giờ
-0 */6 * * * postgres /usr/local/bin/backup_script.sh
-
-# Backup mỗi tuần (Sunday 2:00 AM)
-0 2 * * 0 postgres /usr/local/bin/backup_script.sh
-```
-
-**Thay đổi retention:**
-Sửa `KEEP_DAYS` trong `volumes/init/backup_script.sh`:
-```bash
-KEEP_DAYS=30  # Giữ backup 30 ngày
-KEEP_DAYS=7   # Giữ backup 7 ngày
-KEEP_DAYS=90  # Giữ backup 90 ngày
-```
-
-## 🔄 Rebuild sau khi thay đổi
-
-```bash
-# Stop services
-docker-compose down
-
-# Rebuild với changes
-docker-compose build --no-cache
-
-# Restart
-docker-compose up -d
-```
-
-## ⚡ Lợi ích của việc tích hợp
-
-- ✅ **Gọn gàng**: Chỉ 1 container thay vì 2
-- ✅ **Hiệu suất**: Backup local, không qua network
-- ✅ **Đơn giản**: Không cần quản lý service riêng
-- ✅ **Reliability**: Cron job ổn định trong PostgreSQL container
-- ✅ **Resource**: Tiết kiệm memory và CPU
-- ✅ **Maintenance**: Dễ monitor và troubleshoot
+---
 
 ## ❗ **TROUBLESHOOTING - GIẢI QUYẾT VẤN ĐỀ**
 
@@ -626,71 +573,131 @@ docker exec erp_postgres pg_dump -U erp_admin -d erp_tngroup > backup/before_res
 docker system df
 ```
 
-### **Liên hệ hỗ trợ:**
-Nếu vấn đề vẫn không được giải quyết:
-- 📧 Email: lamvantruyen@gmail.com
-- 💼 LinkedIn: https://www.linkedin.com/in/lamtruyen/
-- 🌐 Website: shareapiai.com
+---
+
+## 📈 **PERFORMANCE TUNING**
+
+### **PostgreSQL Optimization:**
+```sql
+-- Kiểm tra slow queries
+SELECT query, mean_time, calls 
+FROM pg_stat_statements 
+ORDER BY mean_time DESC LIMIT 10;
+
+-- Kiểm tra index usage
+SELECT schemaname, tablename, attname, n_distinct, correlation 
+FROM pg_stats 
+WHERE schemaname = 'erp';
+
+-- Analyze database statistics
+ANALYZE;
+
+-- Vacuum để cleanup
+VACUUM ANALYZE;
+```
+
+### **Configuration Tuning:**
+```ini
+# postgresql.conf optimizations (trong volumes/data/)
+shared_buffers = 256MB
+effective_cache_size = 1GB
+maintenance_work_mem = 64MB
+checkpoint_completion_target = 0.9
+wal_buffers = 16MB
+default_statistics_target = 100
+random_page_cost = 1.1
+```
+
+### **Redis Optimization:**
+```bash
+# Redis config optimizations
+maxmemory 256mb
+maxmemory-policy allkeys-lru
+save 900 1
+save 300 10
+save 60 10000
+```
 
 ---
+
+## 🔄 **DEPLOYMENT ENVIRONMENTS**
+
+### **Development Environment:**
+```powershell
+# Sử dụng docker-compose.dev.yml
+docker-compose -f docker-compose.dev.yml up -d
+
+# Includes: Jupyter notebook, debug mode
+```
+
+### **Testing Environment:**
+```powershell
+# Sử dụng docker-compose.test.yml
+docker-compose -f docker-compose.test.yml up -d
+
+# Simplified setup cho testing
+```
+
+### **Production Environment:**
+```powershell
+# Sử dụng docker-compose.yml
+docker-compose up -d
+
+# Full security, SSL, monitoring
+```
+
+---
+
+## 🏁 **KẾT LUẬN**
+
+### ✅ **Những gì bạn nhận được:**
+
+- 🗄️ **Production-ready PostgreSQL Database** - Sẵn sàng cho ứng dụng ERP
+- 📊 **Professional Management Tools** - pgAdmin, monitoring, backup
+- 🛡️ **Enterprise Security** - Authentication, encryption, access control
+- ⚡ **High Performance** - Optimized cho ERP workloads
+- 🔄 **Automated Operations** - Backup, recovery, maintenance
+- 📚 **Complete Documentation** - Setup, usage, troubleshooting
+- 🧪 **Testing Framework** - Automated validation scripts
+
+### 🚀 **Next Steps cho việc phát triển ERP:**
+
+1. **📱 Frontend Development**
+   - React, Vue.js, Angular cho web interface
+   - React Native, Flutter cho mobile apps
+
+2. **🔧 Backend API Development**
+   - REST API với Node.js, Python, PHP, Java
+   - GraphQL cho flexible data queries
+   - Microservices architecture
+
+3. **📊 Business Logic Implementation**
+   - Accounting modules (GL, AP, AR)
+   - Inventory management
+   - CRM & Sales management
+   - HR & Payroll systems
+   - Reporting & Analytics
+
+4. **🔌 Integration Capabilities**
+   - Third-party API integrations
+   - Import/Export functionalities
+   - Email & notification systems
+   - Document management
+
+### 🎯 **Lợi ích của việc sử dụng platform này:**
+
+- **⏱️ Tiết kiệm thời gian**: Không cần setup database từ đầu
+- **🛡️ Bảo mật cao**: Enterprise-grade security từ ngày đầu
+- **📈 Scalable**: Dễ dàng mở rộng theo nhu cầu doanh nghiệp
+- **🔧 Maintenance**: Automated backup và monitoring
+- **👥 Team Ready**: Multiple developers có thể work cùng lúc
+- **📚 Documentation**: Đầy đủ hướng dẫn và best practices
 
 ---
 
 ## 👨‍💻 **Developer Information**
 
-**Developed by:** Lam Van Truyen  
-**Email:** lamvantruyen@gmail.com  
-**LinkedIn:** https://www.linkedin.com/in/lamtruyen/  
-**Website:** shareapiai.com  
-
-## 📞 **Support & Contact**
-
-Nếu bạn cần hỗ trợ hoặc có câu hỏi về hệ thống:
-- 📧 Email: lamvantruyen@gmail.com
-- 💼 LinkedIn: https://www.linkedin.com/in/lamtruyen/
-- 🌐 Website: shareapiai.com
-
----
-
-## � **KẾT LUẬN**
-
-### **✅ Tính năng đã hoàn thành:**
-- ✅ PostgreSQL 15 Database với full configuration
-- ✅ pgAdmin 4 Web Management Interface  
-- ✅ Redis Cache System
-- ✅ Docker Container Orchestration
-- ✅ Automated Backup System
-- ✅ Security & Authentication
-- ✅ Performance Optimization
-- ✅ Complete Testing Scripts
-- ✅ Comprehensive Documentation
-
-### **🎯 Hệ thống phù hợp cho:**
-- 🏢 **ERP Systems** - Quản lý tài nguyên doanh nghiệp
-- 📊 **Business Applications** - Ứng dụng kinh doanh
-- 🔄 **Data Management** - Quản lý dữ liệu phức tạp  
-- 📈 **Analytics & Reporting** - Phân tích và báo cáo
-- 🤖 **AI/ML Applications** - Ứng dụng AI/ML (với Vector DB)
-
-### **📈 Khả năng mở rộng:**
-- 🔄 **Horizontal Scaling** - Thêm PostgreSQL replicas
-- ⚡ **Performance Tuning** - Tối ưu queries và indexes
-- 🧠 **AI Integration** - Tích hợp Vector Database
-- 🌐 **API Development** - Xây dựng REST APIs
-- 📱 **Mobile Support** - Hỗ trợ ứng dụng mobile
-
-### **🚀 Next Steps:**
-1. **Customization**: Tùy chỉnh schema theo nhu cầu cụ thể
-2. **Application Development**: Phát triển ứng dụng ERP
-3. **Performance Monitoring**: Thiết lập monitoring production  
-4. **Security Hardening**: Tăng cường bảo mật cho production
-5. **CI/CD Pipeline**: Thiết lập quy trình deploy tự động
-
----
-
-## 👨‍💻 **Developer Information**
-
-**🏢 Developed for:** TN Group  
+**🏢 Developed for:** TN Group & ERP Development Community  
 **👤 Developer:** Lam Van Truyen  
 **📧 Email:** lamvantruyen@gmail.com  
 **💼 LinkedIn:** https://www.linkedin.com/in/lamtruyen/  
@@ -698,28 +705,27 @@ Nếu bạn cần hỗ trợ hoặc có câu hỏi về hệ thống:
 
 ## 📞 **Support & Contact**
 
-Để được hỗ trợ kỹ thuật hoặc có câu hỏi về hệ thống:
+Để được hỗ trợ kỹ thuật hoặc có câu hỏi về platform:
 
 📧 **Email Support:** lamvantruyen@gmail.com  
 💼 **Professional Network:** https://www.linkedin.com/in/lamtruyen/  
 🌐 **Technical Blog:** shareapiai.com  
+🔗 **GitHub Repository:** https://github.com/TruyenLam/db_postgres_erp
 
 **⏰ Response Time:** Thường trong vòng 24 giờ  
 **🔧 Support Type:** Technical consultation, troubleshooting, customization  
 
 ---
 
-### 🎉 **ERP TN Group System - Ready for Production!**
+### 🎉 **PostgreSQL Database Platform for ERP - Ready for Development!**
 
 **📅 Created:** September 2025  
-**🔄 Last Updated:** September 9, 2025  
-**📊 Version:** 1.0 Stable  
-**✅ Status:** Production Ready  
+**🔄 Last Updated:** September 10, 2025  
+**📊 Version:** 1.0 Production Ready  
+**✅ Status:** Active Development & Support  
 
 ---
 
-> 💡 **Tip:** Bookmark this README để dễ dàng tham khảo các commands và troubleshooting steps!
+> 💡 **Tip:** Bookmark this README để dễ dàng tham khảo các commands và best practices khi phát triển ERP!
 
-</code>
-
-**🏆 Chúc bạn thành công với hệ thống ERP TN Group!**
+**🚀 Chúc bạn thành công với việc phát triển ứng dụng ERP trên nền tảng này!**

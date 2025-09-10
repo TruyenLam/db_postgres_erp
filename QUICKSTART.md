@@ -1,4 +1,8 @@
-# 🚀 ERP TN Group - Quick Start Guide
+# �️ PostgreSQL Database Platform for ERP - Quick Start Guide
+
+**Nền tảng database PostgreSQL được tùy chỉnh cho ứng dụng ERP**
+
+> ⚠️ **Lưu ý**: Đây là database platform, không phải ứng dụng ERP hoàn chỉnh
 
 ## ⚡ SETUP NHANH (3 BƯỚC)
 
@@ -10,13 +14,17 @@ docker --version
 
 ### 2️⃣ Cấu hình & Khởi động
 ```powershell
+# Clone repository
+git clone https://github.com/TruyenLam/db_postgres_erp.git
+cd db_postgres_erp
+
 # Copy cấu hình
 copy .env.example .env
 
 # Chỉnh sửa passwords (BẮT BUỘC)
 notepad .env
 
-# Khởi động hệ thống
+# Khởi động database platform
 docker-compose -f docker-compose.test.yml up -d
 ```
 
@@ -28,6 +36,31 @@ powershell -ExecutionPolicy Bypass -File test_system.ps1
 # Truy cập pgAdmin: http://localhost:8080
 # Email: lamvantruyen@gmail.com
 # Password: [từ file .env]
+```
+
+## 🗄️ **KẾT NỐI DATABASE**
+
+```yaml
+Host: localhost
+Port: 5432
+Database: erp_tngroup
+Username: erp_admin
+Password: [từ file .env]
+```
+
+## 🛠️ **SỬ DỤNG CHO DEVELOPMENT**
+
+```sql
+-- Tạo schema ERP
+CREATE SCHEMA erp;
+
+-- Ví dụ bảng users
+CREATE TABLE erp.users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
+    email VARCHAR(100),
+    created_at TIMESTAMP DEFAULT NOW()
+);
 ```
 
 ## 🔧 COMMANDS THƯỜNG DÙNG

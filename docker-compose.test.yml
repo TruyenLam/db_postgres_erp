@@ -1,6 +1,6 @@
 # ================================================
 # ERP TN Group - Docker Compose (Test Version)
-# Simplified for testing
+# Simplified for testing with proper volume mapping
 # 
 # Developer: Lam Van Truyen
 # Email: lamvantruyen@gmail.com
@@ -27,7 +27,7 @@ services:
       - "5432:5432"
       
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./volumes/data:/var/lib/postgresql/data
       - ./volumes/init:/docker-entrypoint-initdb.d
       - ./backup:/backup
       
@@ -59,7 +59,7 @@ services:
       - "8080:80"
       
     volumes:
-      - pgadmin_data:/var/lib/pgadmin
+      - ./volumes/pgadmin:/var/lib/pgadmin
       
     networks:
       - erp_network
@@ -82,7 +82,7 @@ services:
       - "6379:6379"
       
     volumes:
-      - redis_data:/data
+      - ./volumes/redis:/data
       
     networks:
       - erp_network
@@ -104,12 +104,8 @@ networks:
         - subnet: 172.20.0.0/24
 
 # ===========================================
-# Volume Configuration
+# Volume Configuration - Local folders mapping
 # ===========================================
 volumes:
-  postgres_data:
-    driver: local
-  pgadmin_data:
-    driver: local
-  redis_data:
+  backup_volume:
     driver: local
