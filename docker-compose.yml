@@ -1,21 +1,25 @@
-version: '3.8'
-
 services:
-  # PostgreSQL Database với bảo mật cao
+  # PostgreSQL Database với Vector DB Support và bảo mật cao
   postgres:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: postgres_secure
+    container_name: postgres_vector_secure
     restart: always
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB:-erpdb}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: /var/lib/postgresql/data/pgdata
       TZ: Asia/Ho_Chi_Minh
       # Security settings
       POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
+      # Vector DB optimizations
+      POSTGRES_SHARED_PRELOAD_LIBRARIES: "vector"
+      POSTGRES_MAX_CONNECTIONS: "200"
+      POSTGRES_SHARED_BUFFERS: "512MB"
+      POSTGRES_EFFECTIVE_CACHE_SIZE: "1GB"
+      POSTGRES_WORK_MEM: "16MB"
     # CHỈ expose port nội bộ - KHÔNG public
     expose:
       - "5432"
@@ -80,8 +84,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
       PGADMIN_CONFIG_SERVER_MODE: 'True'
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'True'
-      # Security settings
-      PGADMIN_CONFIG_LOGIN_BANNER: "🔒 ERP TN Group - Authorized Personnel Only"
+      # Security settings  
       PGADMIN_CONFIG_CONSOLE_LOG_LEVEL: 20
     # CHỈ expose port nội bộ
     expose:

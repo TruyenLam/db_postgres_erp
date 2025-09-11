@@ -3,7 +3,7 @@
 # Enhanced security, backup capabilities và AI/ML support
 # ================================================
 
-FROM postgres:15-alpine
+FROM postgres:16-alpine
 
 # Install build dependencies cho pgvector và security tools
 RUN apk update && apk add --no-cache \
@@ -13,22 +13,28 @@ RUN apk update && apk add --no-cache \
     openssl \
     shadow \
     tzdata \
-    # Build dependencies cho pgvector
-    build-base \
-    clang15 \
-    llvm15 \
-    git \
-    postgresql15-dev \
+    # Try to install pgvector from package manager first
+    postgresql16-contrib \
     && rm -rf /var/cache/apk/*
 
-# Install pgvector extension
-RUN cd /tmp && \
+# Install pgvector extension (install only required components)
+RUN apk add --no-cache --virtual .build-deps \
+        build-base \
+        git \
+        postgresql16-dev && \
+    cd /tmp && \
     git clone --branch v0.5.1 https://github.com/pgvector/pgvector.git && \
     cd pgvector && \
-    make OPTFLAGS="" && \
-    make install && \
+    make USE_PGXS=1 PG_CONFIG=/usr/local/bin/pg_config OPTFLAGS="" && \
+    # Install only the shared library and SQL files (ignore LLVM errors)
+    make USE_PGXS=1 PG_CONFIG=/usr/local/bin/pg_config install-lib install-sql || \
+    (cp vector.so /usr/local/lib/postgresql/ && \
+     cp sql/vector.sql /usr/local/share/postgresql/extension/ && \
+     cp sql/vector--*.sql /usr/local/share/postgresql/extension/ && \
+     cp vector.control /usr/local/share/postgresql/extension/) && \
     cd / && \
-    rm -rf /tmp/pgvector
+    rm -rf /tmp/pgvector && \
+    apk del .build-deps
 
 # Security: Create non-root user for backup processes
 RUN addgroup -g 2000 backup && \
